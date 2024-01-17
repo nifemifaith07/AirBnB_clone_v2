@@ -114,3 +114,22 @@ class test_fileStorage(unittest.TestCase):
         for key, value in info.items():
             setattr(new, key, value)
         self.assertEqual(info['name'], new.to_dict()['name'])
+
+    def test_delete(self):
+        """Test the delete method."""
+        new = BaseModel()
+        key = "{}.{}".format(type(new).__name__, new.id)
+        FileStorage._FileStorage__objects[key] = new
+        self.storage.delete(new)
+        self.assertNotIn(new, FileStorage._FileStorage__objects)
+
+    def test_delete_nonexistant(self):
+        """Test delete method on a nonexistent object."""
+        try:
+            self.storage.delete(BaseModel())
+        except Exception:
+            self.fail
+
+
+if __name__ == "__main__":
+    unittest.main()

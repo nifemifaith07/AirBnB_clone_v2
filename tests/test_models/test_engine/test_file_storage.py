@@ -107,3 +107,10 @@ class test_fileStorage(unittest.TestCase):
         from models.engine.file_storage import FileStorage
         print(type(storage))
         self.assertEqual(type(storage), FileStorage)
+
+    def test_dict_args(self):
+        new = BaseModel()
+        info = {'name':'Dan', 'age':37}
+        for key, value in info.items():
+            setattr(new, key, value)
+        self.assertEqual(info['name'], new.to_dict()['name'])

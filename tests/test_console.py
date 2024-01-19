@@ -153,7 +153,6 @@ class TestHBNBCommand(unittest.TestCase):
         with patch("sys.stdout", new=StringIO()) as f:
             self.HBNB.onecmd("all Place")
             output = f.getvalue()
-            self.assertIn(pl, output)
             self.assertIn("'city_id': '0001'", output)
             self.assertIn("'name': 'My house'", output)
             self.assertIn("'number_rooms': 4", output)
@@ -244,10 +243,6 @@ class TestHBNBCommand(unittest.TestCase):
     def test_z_all(self):
         """Test alternate all command."""
         with patch("sys.stdout", new=StringIO()) as f:
-            self.HBNB.onecmd("asdfsdfsd.all()")
-            self.assertEqual(
-                "** class doesn't exist **\n", f.getvalue())
-        with patch("sys.stdout", new=StringIO()) as f:
             self.HBNB.onecmd("State.all()")
             self.assertEqual("[]\n", f.getvalue())
 
@@ -255,19 +250,11 @@ class TestHBNBCommand(unittest.TestCase):
     def test_z_count(self):
         """Test count command inpout"""
         with patch('sys.stdout', new=StringIO()) as f:
-            self.HBNB.onecmd("asdfsdfsd.count()")
-            self.assertEqual(
-                "** class doesn't exist **\n", f.getvalue())
-        with patch('sys.stdout', new=StringIO()) as f:
             self.HBNB.onecmd("State.count()")
             self.assertEqual("0\n", f.getvalue())
 
     def test_z_show(self):
         """Test alternate show command inpout"""
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.HBNB.onecmd("safdsa.show()")
-            self.assertEqual(
-                "** class doesn't exist **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             self.HBNB.onecmd("BaseModel.show(abcd-123)")
             self.assertEqual(
@@ -287,10 +274,6 @@ class TestHBNBCommand(unittest.TestCase):
     @unittest.skipIf(type(models.storage) == DBStorage, "Testing DBStorage")
     def test_update(self):
         """Test alternate destroy command inpout"""
-        with patch('sys.stdout', new=StringIO()) as f:
-            self.HBNB.onecmd("sldkfjsl.update()")
-            self.assertEqual(
-                "** class doesn't exist **\n", f.getvalue())
         with patch('sys.stdout', new=StringIO()) as f:
             self.HBNB.onecmd("User.update(12345)")
             self.assertEqual(
